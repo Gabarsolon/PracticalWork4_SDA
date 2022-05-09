@@ -7,12 +7,13 @@ class SMIterator{
 private:
 	const SortedMap& map;
 	SMIterator(const SortedMap& mapionar);
-
+	
 	TElem* sortedElements;
 	int nrOfElements;
 	int current;
 
 public:
+	~SMIterator();
 	void first();
 	void next();
 	bool valid() const;

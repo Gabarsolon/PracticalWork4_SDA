@@ -5,15 +5,35 @@ using namespace std;
 
 int SortedMap::h(TKey k, int i) const
 {
-	return (k % capacity + i * (2 * k + 1) % capacity) % capacity;
+	return abs((k % capacity + i * (2 * k + 1) % capacity) % capacity);
 }
 
 void SortedMap::resizeAndRehash()
 {
+	capacity *= 2;
+	TElem* new_elements = new TElem[capacity];
+	for (int i = 0; i < capacity; i++)
+		new_elements[i] = NULL_TPAIR;
+	for(int i=0;i<capacity/2;i++)
+		if (elements[i].second != NULL_TVALUE)
+		{
+			int k = elements[i].first;
+			int j = 0;
+			int pos = h(k, j);
+			while (j < capacity && new_elements[pos].second != NULL_TVALUE)
+			{
+				j++;
+				pos = h(k, j);
+			}
+			new_elements[pos] = elements[i];
+		}
+	delete[] elements;
+	elements = new_elements;
 }
 
 SortedMap::SortedMap(Relation r) {
-	capacity = 64;
+	threshold = 0.75;
+	capacity = 32;
 	elements = new TElem[capacity];
 	for (int i = 0; i < capacity; i++)
 		elements[i] = NULL_TPAIR;
@@ -22,6 +42,8 @@ SortedMap::SortedMap(Relation r) {
 }
 
 TValue SortedMap::add(TKey k, TValue v) {
+	if(double(nrOfElements)/double(capacity) > threshold)
+		resizeAndRehash();
 	int i = 0;
 	int pos = h(k, i);
 	while (i < capacity && elements[pos].second != NULL_TVALUE)
@@ -35,10 +57,7 @@ TValue SortedMap::add(TKey k, TValue v) {
 		i++;
 		pos = h(k, i);
 	}
-	if (i == capacity)
-		resizeAndRehash();
-	else
-		elements[pos] = TElem(k, v);
+	elements[pos] = TElem(k, v);
 	nrOfElements++;
 	return NULL_TVALUE;
 }
@@ -87,5 +106,5 @@ SMIterator SortedMap::iterator() const {
 }
 
 SortedMap::~SortedMap() {
-	//TODO - Implementation
+	delete[] elements;
 }

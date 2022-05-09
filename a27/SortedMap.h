@@ -21,6 +21,7 @@ class SortedMap {
 		void resizeAndRehash();
 		int nrOfElements;
 		Relation relation;
+		double threshold;
     public:
 
     // implicit constructor

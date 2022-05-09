@@ -22,6 +22,11 @@ SMIterator::SMIterator(const SortedMap& m) : map(m){
 	current = 0;
 }
 
+SMIterator::~SMIterator()
+{
+	delete[] sortedElements;
+}
+
 void SMIterator::first(){
 	current = 0;
 }
