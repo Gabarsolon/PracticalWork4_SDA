@@ -8,13 +8,19 @@ typedef int TValue;
 typedef std::pair<TKey, TValue> TElem;
 #define NULL_TVALUE -111111
 #define NULL_TPAIR pair<TKey, TValue>(-111111, -111111);
+//#define DELETED -1111111
 class SMIterator;
 typedef bool(*Relation)(TKey, TKey);
 
 class SortedMap {
 	friend class SMIterator;
     private:
-		//TODO - Representation
+		TElem* elements;
+		int capacity;
+		int h(TKey k, int i) const;
+		void resizeAndRehash();
+		int nrOfElements;
+		Relation relation;
     public:
 
     // implicit constructor

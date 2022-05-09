@@ -8,7 +8,9 @@ private:
 	const SortedMap& map;
 	SMIterator(const SortedMap& mapionar);
 
-	//TODO - Representation
+	TElem* sortedElements;
+	int nrOfElements;
+	int current;
 
 public:
 	void first();
