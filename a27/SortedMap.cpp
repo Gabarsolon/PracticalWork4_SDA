@@ -31,6 +31,10 @@ void SortedMap::resizeAndRehash()
 	delete[] elements;
 	elements = new_elements;
 }
+//alpha = nrOfElements/capacity
+//Best case: Theta(capacity)
+//Worst case: Theta(capacity + 1/(1-alpha)
+//Total: O(capacity + 1/(1-alpha)
 
 SortedMap::SortedMap(Relation r) {
 	threshold = 0.75;
@@ -41,6 +45,7 @@ SortedMap::SortedMap(Relation r) {
 	nrOfElements = 0;
 	relation = r;
 }
+//Theta(capacity)
 
 TValue SortedMap::add(TKey k, TValue v) {
 	if(double(nrOfElements)/double(capacity) > threshold)
@@ -62,6 +67,9 @@ TValue SortedMap::add(TKey k, TValue v) {
 	nrOfElements++;
 	return NULL_TVALUE;
 }
+//Best case: Theta(1)
+//Worst case: Theta(1/(1-alpha))
+//Total: O(1/(1-alpha))
 
 TValue SortedMap::search(TKey k) const {
 	int i = 0;
@@ -75,6 +83,9 @@ TValue SortedMap::search(TKey k) const {
 		return NULL_TVALUE;
 	return elements[pos].second;
 }
+//Best case: Theta(1)
+//Worst case: Theta(1/(1-alpha))
+//Total: O(1/(1-alpha))
 
 TValue SortedMap::remove(TKey k) {
 	int i = 0;
@@ -91,21 +102,29 @@ TValue SortedMap::remove(TKey k) {
 	nrOfElements--;
 	return old_value;
 }
+//Best case: Theta(1)
+//Worst case: Theta(1/(1-alpha))
+//Total: O(1/(1-alpha))
+
 
 int SortedMap::size() const {
 	//TODO - Implementation
 	return nrOfElements;
 }
+//Theta(1)
 
 bool SortedMap::isEmpty() const {
 	//TODO - Implementation
 	return nrOfElements == 0;
 }
+//Theta(1)
 
 SMIterator SortedMap::iterator() const {
 	return SMIterator(*this);
 }
+//Theta(1)
 
 SortedMap::~SortedMap() {
 	delete[] elements;
 }
+//Theta(1)

@@ -21,30 +21,37 @@ SMIterator::SMIterator(const SortedMap& m) : map(m){
 	}
 	current = 0;
 }
+//Best case: Theta(capacity)
+//Worst case: Theta(capacity + nrOfElements^2)
+//Total: O(capacity + nrOfElements^2)
 
 SMIterator::~SMIterator()
 {
 	delete[] sortedElements;
 }
+//Theta(1)
 
 void SMIterator::first(){
 	current = 0;
 }
+//Theta(1)
 
 void SMIterator::next(){
 	if (!valid())
 		throw std::exception();
 	current++;
 }
+//Theta(1)
 
 bool SMIterator::valid() const{
 	return current != nrOfElements;
 }
+//Theta(1)
 
 TElem SMIterator::getCurrent() const{
 	if (!valid())
 		throw std::exception();
 	return sortedElements[current];
 }
-
+//Theta(1)
 
