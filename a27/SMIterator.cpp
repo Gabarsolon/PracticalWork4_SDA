@@ -5,20 +5,20 @@
 using namespace std;
 
 SMIterator::SMIterator(const SortedMap& m) : map(m){
-	int index = 0;
-	nrOfElements = m.nrOfElements;
-	sortedElements = new TElem[nrOfElements];
+	nrOfElements = 0;
+	sortedElements = new TElem[m.nrOfElements];
 	for (int i = 0; i < m.capacity; i++)
-		if (m.elements[i].second != NULL_TVALUE)
-			sortedElements[index++] = m.elements[i];
-	for(int i=0;i<nrOfElements-1;i++)
-		for(int j=i+1;j<nrOfElements;j++)
-			if (!m.relation(sortedElements[i].first, sortedElements[j].first))
+		if(m.elements[i].second!= NULL_TVALUE)
+	{
+			int index = nrOfElements - 1;
+			while (index >= 0 && m.relation(sortedElements[index].first, m.elements[i].first) == false)
 			{
-				TElem aux = sortedElements[i];
-				sortedElements[i] = sortedElements[j];
-				sortedElements[j] = aux;
+				sortedElements[index + 1] = sortedElements[index];
+				index--;
 			}
+			sortedElements[index + 1] = m.elements[i];
+			nrOfElements++;
+	}
 	current = 0;
 }
 

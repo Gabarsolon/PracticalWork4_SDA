@@ -7,6 +7,7 @@ int SortedMap::h(TKey k, int i) const
 {
 	return abs((k % capacity + i * (2 * k + 1) % capacity) % capacity);
 }
+//Theta(1)
 
 void SortedMap::resizeAndRehash()
 {
