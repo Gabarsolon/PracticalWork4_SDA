@@ -16,7 +16,7 @@ void SortedMap::resizeAndRehash()
 	for (int i = 0; i < capacity; i++)
 		new_elements[i] = NULL_TPAIR;
 	for(int i=0;i<capacity/2;i++)
-		if (elements[i].second != NULL_TVALUE or elements[i] != DELETED)
+		if (elements[i].second != NULL_TVALUE && elements[i] != DELETED)
 		{
 			int k = elements[i].first;
 			int j = 0;
@@ -52,7 +52,7 @@ TValue SortedMap::add(TKey k, TValue v) {
 		resizeAndRehash();
 	int i = 0;
 	int pos = h(k, i);
-	while (i < capacity && elements[pos].second != NULL_TVALUE)
+	while (elements[pos].second != NULL_TVALUE)
 	{
 		if (elements[pos] == DELETED)
 			break;
@@ -76,15 +76,13 @@ TValue SortedMap::add(TKey k, TValue v) {
 TValue SortedMap::search(TKey k) const {
 	int i = 0;
 	int pos = h(k, i);
-	while (i < capacity && elements[pos].first != k)
+	while (elements[pos].first != k)
 	{
 		if (elements[pos].second == NULL_TVALUE)
 			return NULL_TVALUE;
 		i++;
 		pos = h(k, i);
 	}
-	if (i == capacity)
-		return NULL_TVALUE;
 	return elements[pos].second;
 }
 //Best case: Theta(1)
@@ -94,15 +92,13 @@ TValue SortedMap::search(TKey k) const {
 TValue SortedMap::remove(TKey k) {
 	int i = 0;
 	int pos = h(k, i);
-	while (i < capacity && elements[pos].first != k)
+	while (elements[pos].first != k)
 	{
 		if (elements[pos].second == NULL_TVALUE)
 			return NULL_TVALUE;
 		i++;
 		pos = h(k, i);
 	}
-	if (i == capacity)
-		return NULL_TVALUE;
 	TValue old_value = elements[pos].second;
 	elements[pos] = DELETED;
 	nrOfElements--;
