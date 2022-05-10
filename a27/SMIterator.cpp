@@ -8,7 +8,7 @@ SMIterator::SMIterator(const SortedMap& m) : map(m){
 	nrOfElements = 0;
 	sortedElements = new TElem[m.nrOfElements];
 	for (int i = 0; i < m.capacity; i++)
-		if(m.elements[i].second!= NULL_TVALUE)
+		if(m.elements[i].second!= NULL_TVALUE && m.elements[i] != DELETED)
 	{
 			int index = nrOfElements - 1;
 			while (index >= 0 && m.relation(sortedElements[index].first, m.elements[i].first) == false)

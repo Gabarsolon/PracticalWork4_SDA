@@ -8,7 +8,7 @@ typedef int TValue;
 typedef std::pair<TKey, TValue> TElem;
 #define NULL_TVALUE -111111
 #define NULL_TPAIR pair<TKey, TValue>(-111111, -111111);
-//#define DELETED -1111111
+#define DELETED pair<TKey, TValue>(-111111, -1111111)
 class SMIterator;
 typedef bool(*Relation)(TKey, TKey);
 
